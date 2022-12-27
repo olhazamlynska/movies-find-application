@@ -1,5 +1,5 @@
 import { useFetchFilm } from 'components/hooks/useFetchDetails';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import * as API from '../../services/API';
 const MovieDetails = () => {
   const film = useFetchFilm();
