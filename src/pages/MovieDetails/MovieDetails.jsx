@@ -1,5 +1,5 @@
 import { useFetchFilm } from 'components/hooks/useFetchDetails';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import * as API from '../../services/API';
 import { Container, LinkNav } from './MovieDetails.styled';
 
