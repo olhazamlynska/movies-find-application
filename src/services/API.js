@@ -11,8 +11,6 @@ const SEARCH_ALL_INFO_PATH = '/movie';
 
 export const POSTER_URL = 'https://image.tmdb.org/t/p/w500';
 
-//https://api.themoviedb.org/3/trending/all/day?page=1&api_key=d8f6c8593dac3d35659165785d083845
-
 export const getTrendingMovies = async () => {
   const response = await axios.get(
     `${TRENDIND_PATH}?page=1&api_key=${API_KEY}`
@@ -28,9 +26,25 @@ export const searchMoviesByName = async search => {
   return response.data;
 };
 
-export const searchMoviesById = async Id => {
+export const searchMovieById = async Id => {
   const response = await axios.get(
     `${SEARCH_ALL_INFO_PATH}/${Id}?api_key=${API_KEY}&language=en-US`
+  );
+
+  return response.data;
+};
+
+export const searchActorsById = async Id => {
+  const response = await axios.get(
+    `${SEARCH_ALL_INFO_PATH}/${Id}/credits?api_key=${API_KEY}&language=en-US`
+  );
+
+  return response.data;
+};
+
+export const searchReviewsById = async Id => {
+  const response = await axios.get(
+    `${SEARCH_ALL_INFO_PATH}/${Id}/reviews?api_key=${API_KEY}&language=en-US`
   );
 
   return response.data;

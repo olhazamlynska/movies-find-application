@@ -1,4 +1,4 @@
-export const moviesMaper = films => {
+export const moviesMapper = films => {
   return films.map(
     ({
       id,

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import * as API from '../../services/API';
-import { moviesMaper } from 'utils/moviesMapper';
+import { moviesMapper } from 'utils/moviesMapper';
 import { List, Item, Poster, Container } from './Home.styled';
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
     async function fetchmovies() {
       try {
         const { results } = await API.getTrendingMovies();
-        const films = moviesMaper(results);
+        const films = moviesMapper(results);
 
         setfilms(films);
       } catch (error) {
@@ -29,7 +29,11 @@ const Home = () => {
           <Item key={id}>
             <Link to={`movies/${id}`} state={{ from: location }}>
               <Poster
-                src={posterPath ? API.POSTER_URL + posterPath : 'No image'}
+                src={
+                  posterPath
+                    ? API.POSTER_URL + posterPath
+                    : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
+                }
                 alt={title}
                 loading="lazy"
                 width={250}

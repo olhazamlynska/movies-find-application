@@ -1,6 +1,8 @@
 import { useFetchFilm } from 'components/hooks/useFetchDetails';
-import {  useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import * as API from '../../services/API';
+import { Container, Wrapper } from './MovieDetails.styled';
+
 const MovieDetails = () => {
   const film = useFetchFilm();
 
@@ -16,18 +18,22 @@ const MovieDetails = () => {
         Go back
       </button>
       {film && (
-        <div>
-          <h2>
-            {film.title} ({new Date(film.release_date).getFullYear()})
-          </h2>
-          <img
-            src={
-              film.poster_path ? API.POSTER_URL + film.poster_path : 'No image'
-            }
-            alt={film.title}
-            loading="lazy"
-            width={250}
-          />
+        <Container>
+          <div>
+            <h2>
+              {film.title} ({new Date(film.release_date).getFullYear()})
+            </h2>
+            <img
+              src={
+                film.poster_path
+                  ? API.POSTER_URL + film.poster_path
+                  : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
+              }
+              alt={film.title}
+              loading="lazy"
+              width={250}
+            />
+          </div>
           <ul>
             <li>
               <h3>User score</h3>
@@ -46,7 +52,17 @@ const MovieDetails = () => {
               </ul>
             </li>
           </ul>
-        </div>
+          <>
+            <Link to="cast" state={location.state}>
+              Cast
+            </Link>
+
+            <Link to="reviews" state={location.state}>
+              Reviews
+            </Link>
+            <Outlet />
+          </>
+        </Container>
       )}
     </>
   );

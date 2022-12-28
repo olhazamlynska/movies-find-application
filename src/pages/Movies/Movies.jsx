@@ -1,7 +1,7 @@
 import { useSearchParams, Link, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as API from '../../services/API';
-import { moviesMaper } from 'utils/moviesMapper';
+import { moviesMapper } from 'utils/moviesMapper';
 
 const Movies = () => {
   const [films, setFilms] = useState([]);
@@ -22,7 +22,7 @@ const Movies = () => {
 
     API.searchMoviesByName(searchQuery)
       .then(({ results }) => {
-        const films = moviesMaper(results);
+        const films = moviesMapper(results);
         setFilms(films);
       })
       .catch(error => {
