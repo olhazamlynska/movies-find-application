@@ -1,5 +1,4 @@
 import { useFetchActors } from 'components/hooks/useFetchActors';
-import { Outlet } from 'react-router-dom';
 import * as API from '../../services/API';
 
 const Cast = () => {
@@ -7,7 +6,7 @@ const Cast = () => {
 
   return (
     <div>
-      {actors && (
+      {actors !== [] ? (
         <ul>
           {actors.map(({ id, character, name, profilePath }) => (
             <li key={id}>
@@ -27,8 +26,9 @@ const Cast = () => {
             </li>
           ))}
         </ul>
+      ) : (
+        <p>The information about actors yet!</p>
       )}
-      <Outlet />
     </div>
   );
 };

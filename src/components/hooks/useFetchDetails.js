@@ -7,7 +7,12 @@ export const useFetchFilm = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    searchMovieById(id).then(setFilm);
+    searchMovieById(id)
+      .then(setFilm)
+      .catch(error => {
+        console.log(error.message);
+        setFilm([]);
+      });
   }, [id]);
 
   return film;

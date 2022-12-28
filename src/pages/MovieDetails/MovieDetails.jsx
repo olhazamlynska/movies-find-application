@@ -1,7 +1,7 @@
 import { useFetchFilm } from 'components/hooks/useFetchDetails';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import * as API from '../../services/API';
-import { Container } from './MovieDetails.styled';
+import { Container, LinkNav } from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const film = useFetchFilm();
@@ -17,7 +17,7 @@ const MovieDetails = () => {
       >
         Go back
       </button>
-      {film && (
+      {film ? (
         <Container>
           <div>
             <h2>
@@ -53,16 +53,18 @@ const MovieDetails = () => {
             </li>
           </ul>
           <>
-            <Link to="cast" state={location.state}>
+            <LinkNav to="cast" state={location.state}>
               Cast
-            </Link>
+            </LinkNav>
 
-            <Link to="reviews" state={location.state}>
+            <LinkNav to="reviews" state={location.state}>
               Reviews
-            </Link>
+            </LinkNav>
             <Outlet />
           </>
         </Container>
+      ) : (
+        <p>Sorry, there no information about film! Please try another!</p>
       )}
     </>
   );

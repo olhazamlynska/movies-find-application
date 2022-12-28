@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -33,4 +35,9 @@ export const Poster = styled.img`
   // min-height: 402px;
   object-fit: cover;
   border-radius: 5px;
+`;
+
+export const LinkNav = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;

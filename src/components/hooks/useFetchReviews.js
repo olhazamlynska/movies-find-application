@@ -8,10 +8,15 @@ export const useFetchReviews = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    searchReviewsById(id).then(data => {
-      const mapReviews = reviewsMapper(data);
-      setReviews(mapReviews);
-    });
+    searchReviewsById(id)
+      .then(data => {
+        const mapReviews = reviewsMapper(data);
+        setReviews(mapReviews);
+      })
+      .catch(error => {
+        console.log(error.message);
+        setReviews([]);
+      });
   }, [id]);
 
   return reviews;

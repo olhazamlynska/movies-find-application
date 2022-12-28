@@ -1,8 +1,8 @@
-import { useSearchParams, Link, useLocation, Outlet } from 'react-router-dom';
+import { useSearchParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
-
+import { LinkNav } from './Movies.styled';
 const Movies = () => {
   const [films, setFilms] = useState([]);
   const location = useLocation();
@@ -13,6 +13,7 @@ const Movies = () => {
   useEffect(() => {
     if (searchQuery === '' && searchQuery === null) {
       setFilms([]);
+
       return;
     }
     if (searchQuery.trim('') === '' || searchQuery === '') {
@@ -48,9 +49,9 @@ const Movies = () => {
           <ul>
             {films.map(({ id, title }) => (
               <li key={id}>
-                <Link to={`${id}`} state={{ from: location }}>
+                <LinkNav to={`${id}`} state={{ from: location }}>
                   {title}
-                </Link>
+                </LinkNav>
               </li>
             ))}
           </ul>

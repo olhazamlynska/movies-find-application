@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
-import { List, Item, Poster, Container } from './Home.styled';
+import { List, Item, Poster, Container, LinkNav } from './Home.styled';
 
 const Home = () => {
   const [films, setfilms] = useState([]);
@@ -27,7 +27,7 @@ const Home = () => {
       <List>
         {films.map(({ id, posterPath, title, name }) => (
           <Item key={id}>
-            <Link to={`movies/${id}`} state={{ from: location }}>
+            <LinkNav to={`movies/${id}`} state={{ from: location }}>
               <Poster
                 src={
                   posterPath
@@ -39,11 +39,10 @@ const Home = () => {
                 width={250}
               />
               {title ? title : name}
-            </Link>
+            </LinkNav>
           </Item>
         ))}
       </List>
-      <Outlet />
     </Container>
   );
 };
