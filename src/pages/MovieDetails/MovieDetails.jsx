@@ -1,7 +1,7 @@
 import { useFetchFilm } from 'components/hooks/useFetchDetails';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import * as API from '../../services/API';
-import { Container, Wrapper } from './MovieDetails.styled';
+import { Container } from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const film = useFetchFilm();
