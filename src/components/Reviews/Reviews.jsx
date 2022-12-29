@@ -29,23 +29,25 @@ const Reviews = () => {
 
   return (
     <>
-      {!reviews && error && (
+      {reviews.length === 0 && error && (
         <Text>There no reviews yet...Please, try another film!</Text>
       )}
-      <div>
-        {reviews && (
-          <List>
-            {reviews.map(({ author, review, id }) => (
-              <Item key={id}>
-                <Name>
-                  Author: <span>{author}</span>
-                </Name>
-                <Text>{review}</Text>
-              </Item>
-            ))}
-          </List>
-        )}
-      </div>
+      {reviews.length > 0 && !error && (
+        <div>
+          {reviews && (
+            <List>
+              {reviews.map(({ author, review, id }) => (
+                <Item key={id}>
+                  <Name>
+                    Author: <span>{author}</span>
+                  </Name>
+                  <Text>{review}</Text>
+                </Item>
+              ))}
+            </List>
+          )}
+        </div>
+      )}
     </>
   );
 };
