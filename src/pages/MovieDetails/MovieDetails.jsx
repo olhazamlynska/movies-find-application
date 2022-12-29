@@ -1,72 +1,87 @@
-import { useFetchFilm } from 'components/hooks/useFetchDetails';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+//import { useFetchFilm } from 'components/hooks/useFetchDetails';
+import { Box } from 'components/Box/Box';
+import { useState, useEffect } from 'react';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as API from '../../services/API';
-import { Container, LinkNav } from './MovieDetails.styled';
+import { LinkNav, BackBtn, List, Item } from './MovieDetails.styled';
 
 const MovieDetails = () => {
-  const film = useFetchFilm();
+  // Хук для фетча деталей
+  //const film = useFetchFilm();
+  const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null);
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    API.searchMovieById(id)
+      .then(setMovie)
+      .catch(error => {
+        console.log();
+        setError(error);
+        setMovie([]);
+      });
+  }, [id]);
+
   return (
-    <>
-      <button
+    <Box as={'div'} pl={[7]}>
+      <BackBtn
         type="button"
         onClick={() => navigate(location?.state?.from ?? '/')}
       >
         Go back
-      </button>
-      {film ? (
-        <Container>
-          <div>
-            <h2>
-              {film.title} ({new Date(film.release_date).getFullYear()})
-            </h2>
+      </BackBtn>
+      {!movie && error && <p>Something went wrong...Please, try again!</p>}
+      {movie && (
+        <Box as={'div'}>
+          <h2>
+            {movie.title} ({new Date(movie.release_date).getFullYear()})
+          </h2>
+          <Box as={'div'} display="flex">
             <img
               src={
-                film.poster_path
-                  ? API.POSTER_URL + film.poster_path
+                movie.poster_path
+                  ? API.POSTER_URL + movie.poster_path
                   : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
               }
-              alt={film.title}
+              alt={movie.title}
               loading="lazy"
               width={250}
             />
-          </div>
-          <ul>
-            <li>
-              <h3>User score</h3>
-              <p>{film.vote_average.toFixed(1)}</p>
-            </li>
-            <li>
-              <h3>Overview</h3>
-              <p>{film.overview}</p>
-            </li>
-            <li>
-              <h3>Genres</h3>
-              <ul>
-                {film.genres.map(({ id, name }) => {
-                  return <li key={id}>{name}</li>;
-                })}
-              </ul>
-            </li>
-          </ul>
-          <>
+
+            <List>
+              <Item>
+                <h3>User score</h3>
+                <p>{movie.vote_average.toFixed(1)}</p>
+              </Item>
+              <Item>
+                <h3>Overview</h3>
+                <p>{movie.overview}</p>
+              </Item>
+              <Item>
+                <h3>Genres</h3>
+                <ul>
+                  {movie.genres.map(({ id, name }) => {
+                    return <li key={id}>{name}</li>;
+                  })}
+                </ul>
+              </Item>
+            </List>
+          </Box>
+          <Box as={'div'} mt={[4]}>
             <LinkNav to="cast" state={location.state}>
               Cast
             </LinkNav>
-
             <LinkNav to="reviews" state={location.state}>
               Reviews
             </LinkNav>
             <Outlet />
-          </>
-        </Container>
-      ) : (
-        <p>Sorry, there no information about film! Please try another!</p>
+          </Box>
+        </Box>
       )}
-    </>
+    </Box>
   );
 };
 export default MovieDetails;

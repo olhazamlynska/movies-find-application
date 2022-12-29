@@ -2,7 +2,9 @@ import { useSearchParams, useLocation, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
-import { LinkNav } from './Movies.styled';
+import { Btn, Input, LinkNav } from './Movies.styled';
+import { Box } from 'components/Box/Box';
+
 const Movies = () => {
   const [films, setFilms] = useState([]);
   const location = useLocation();
@@ -39,10 +41,10 @@ const Movies = () => {
   };
 
   return (
-    <div>
+    <Box as={'div'} pl={[7]}>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="query" />
-        <button type="submit">Find films</button>
+        <Input type="text" name="query" />
+        <Btn type="submit">Find films</Btn>
       </form>
       {films.length !== 0 && (
         <>
@@ -58,7 +60,7 @@ const Movies = () => {
           <Outlet />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

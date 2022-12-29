@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchReviewsById } from 'services/API';
 import { reviewsMapper } from 'utils/reviewsMapper';
-
+import { Item, Name, Text, List } from './Reviews.styled';
 // Хук для запиту на інфо
 //import { useFetchReviews } from 'components/hooks/useFetchReviews';
 
@@ -28,20 +28,25 @@ const Reviews = () => {
   }, [id]);
 
   return (
-    <div>
-      {reviews !== [] ? (
-        <ul>
-          {reviews.map(({ author, review, id }) => (
-            <li key={id}>
-              <h2>Author: {author}</h2>
-              <p>{review}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>The no reviews yet!</p>
+    <>
+      {!reviews || error || (
+        <Text>There no reviews yet...Please, try another film!</Text>
       )}
-    </div>
+      <div>
+        {reviews && (
+          <List>
+            {reviews.map(({ author, review, id }) => (
+              <Item key={id}>
+                <Name>
+                  Author: <span>{author}</span>
+                </Name>
+                <Text>{review}</Text>
+              </Item>
+            ))}
+          </List>
+        )}
+      </div>
+    </>
   );
 };
 export default Reviews;

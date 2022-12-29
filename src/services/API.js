@@ -6,9 +6,6 @@ const API_KEY = 'd8f6c8593dac3d35659165785d083845';
 const TRENDIND_PATH = '/trending/all/day';
 const SEARCH_PATH = '/search/movie';
 const SEARCH_ALL_INFO_PATH = '/movie';
-//const SEARCH_ACTORS_PATH = '/movies/get-movie-credits';
-//const SEARCH_REVIEWS_PATH = '/movies/get-movie-reviews';
-
 export const POSTER_URL = 'https://image.tmdb.org/t/p/w500';
 
 export const getTrendingMovies = async () => {

@@ -1,5 +1,6 @@
 import { useFetchActors } from 'components/hooks/useFetchActors';
 import * as API from '../../services/API';
+import { List, Item, Poster, Name } from './Cast.styled';
 
 const Cast = () => {
   const actors = useFetchActors();
@@ -7,10 +8,10 @@ const Cast = () => {
   return (
     <div>
       {actors !== [] ? (
-        <ul>
+        <List>
           {actors.map(({ id, character, name, profilePath }) => (
-            <li key={id}>
-              <img
+            <Item key={id}>
+              <Poster
                 src={
                   profilePath
                     ? API.POSTER_URL + profilePath
@@ -21,11 +22,11 @@ const Cast = () => {
                 width={250}
                 height={200}
               />
-              <p>{name}</p>
-              <p>{character}</p>
-            </li>
+              <Name>{name}</Name>
+              <Name>{character}</Name>
+            </Item>
           ))}
-        </ul>
+        </List>
       ) : (
         <p>The information about actors yet!</p>
       )}

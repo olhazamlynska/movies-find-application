@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
-import { List, Item, Poster, Container, LinkNav } from './Home.styled';
+import { List, Item, Poster, LinkNav, Title, Name } from './Home.styled';
 
 const Home = () => {
   const [films, setfilms] = useState([]);
@@ -22,8 +22,8 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
-      <h2>Tending movies today</h2>
+    <>
+      <Title>Tending movies today</Title>
       <List>
         {films.map(({ id, posterPath, title, name }) => (
           <Item key={id}>
@@ -38,12 +38,12 @@ const Home = () => {
                 loading="lazy"
                 width={250}
               />
-              {title ? title : name}
+              <Name>{title ? title : name}</Name>
             </LinkNav>
           </Item>
         ))}
       </List>
-    </Container>
+    </>
   );
 };
 export default Home;

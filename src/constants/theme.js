@@ -7,7 +7,7 @@ export const theme = {
     backgroundBody: '#eef4f0',
     accentColor: '#4bbed7',
   },
-  space: [0, 2, 4, 8, 16, 32, 64, 128, 256],
+  space: [0, 2, 4, 8, 16, 32, 40, 55, 64, 128, 256],
   fonts: {
     body: 'system-ui, sans-serif',
     heading: 'system-ui, sans-serif',
