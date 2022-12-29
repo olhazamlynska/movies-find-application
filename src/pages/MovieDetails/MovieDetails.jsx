@@ -1,6 +1,7 @@
 //import { useFetchFilm } from 'components/hooks/useFetchDetails';
+
 import { Box } from 'components/Box/Box';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as API from '../../services/API';
 import { LinkNav, BackBtn, List, Item } from './MovieDetails.styled';
@@ -77,7 +78,9 @@ const MovieDetails = () => {
             <LinkNav to="reviews" state={location.state}>
               Reviews
             </LinkNav>
-            <Outlet />
+            <Suspense fallback={null}>
+              <Outlet />
+            </Suspense>
           </Box>
         </Box>
       )}

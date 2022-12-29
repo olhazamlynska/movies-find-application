@@ -1,5 +1,6 @@
 import { useSearchParams, useLocation, Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
 import { Btn, Input, LinkNav } from './Movies.styled';
@@ -57,7 +58,9 @@ const Movies = () => {
               </li>
             ))}
           </ul>
-          <Outlet />
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </>
       )}
     </Box>
