@@ -29,7 +29,7 @@ const Reviews = () => {
 
   return (
     <>
-      {!reviews || error || (
+      {!reviews && error && (
         <Text>There no reviews yet...Please, try another film!</Text>
       )}
       <div>
