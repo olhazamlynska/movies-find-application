@@ -28,8 +28,8 @@ const Reviews = () => {
   }, [id]);
 
   return (
-    <>
-      {reviews.length === 0 && error && (
+    <div>
+      {reviews.length === 0 && !error && (
         <Text>There no reviews yet...Please, try another film!</Text>
       )}
       {reviews.length > 0 && !error && (
@@ -48,7 +48,7 @@ const Reviews = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default Reviews;
