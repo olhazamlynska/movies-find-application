@@ -1,6 +1,5 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
 import { Btn, Input, LinkNav } from './Movies.styled';
@@ -14,16 +13,6 @@ const Movies = () => {
   const searchQuery = searchParams.get('query') ?? '';
 
   useEffect(() => {
-    if (searchQuery === '' && searchQuery === null) {
-      setFilms([]);
-
-      return;
-    }
-    if (searchQuery.trim('') === '' || searchQuery === '') {
-      setFilms([]);
-      return;
-    }
-
     API.searchMoviesByName(searchQuery)
       .then(({ results }) => {
         const films = moviesMapper(results);
@@ -38,6 +27,12 @@ const Movies = () => {
   const handleSubmit = e => {
     e.preventDefault();
     setSearchParams({ query: e.target.elements.query.value });
+
+    if (searchQuery.trim('') === '' || searchQuery === null) {
+      setFilms([]);
+      return;
+    }
+
     e.target.reset();
   };
 
