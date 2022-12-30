@@ -1,9 +1,9 @@
 import { Box } from 'components/Box/Box';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container, Header, Link, List } from './SharedLayout.styled';
 
 export const SharedLayout = () => {
-
   return (
     <Container>
       <Header>
@@ -19,7 +19,9 @@ export const SharedLayout = () => {
         </nav>
       </Header>
       <Box as={'main'}>
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </Box>
       <Box as={'footer'}></Box>
     </Container>

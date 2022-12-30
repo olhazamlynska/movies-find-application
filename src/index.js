@@ -9,11 +9,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter basename="/goit-react-hw-05-movies">
+    <BrowserRouter basename="/goit-react-hw-05-movies">
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <App />
-      </BrowserRouter>
-    </ThemeProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
