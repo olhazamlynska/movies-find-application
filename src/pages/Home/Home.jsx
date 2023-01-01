@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
 import { List, Item, Poster, LinkNav, Title, Name } from './Home.styled';
+import RequestError from 'components/RequestError/RequestError';
 
 const Home = () => {
   const [films, setfilms] = useState([]);
+  const [error, setError] = useState(null);
   const location = useLocation();
   useEffect(() => {
     async function fetchmovies() {
@@ -16,6 +18,7 @@ const Home = () => {
         setfilms(films);
       } catch (error) {
         console.log(error.message);
+        setError(error);
       }
     }
     fetchmovies();
@@ -23,6 +26,7 @@ const Home = () => {
 
   return (
     <>
+      {error && <RequestError />}
       <Title>Tending movies today</Title>
       <List>
         {films.map(({ id, posterPath, title, name }) => (

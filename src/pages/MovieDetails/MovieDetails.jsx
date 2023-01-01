@@ -1,6 +1,7 @@
 //import { useFetchFilm } from 'components/hooks/useFetchDetails';
 
 import { Box } from 'components/Box/Box';
+import RequestError from 'components/RequestError/RequestError';
 import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as API from '../../services/API';
@@ -34,7 +35,7 @@ const MovieDetails = () => {
       >
         Go back
       </BackBtn>
-      {!movie && error && <p>Something went wrong...Please, try again!</p>}
+      {!movie && error && <RequestError />}
       {movie && (
         <Box as={'div'}>
           <h2>

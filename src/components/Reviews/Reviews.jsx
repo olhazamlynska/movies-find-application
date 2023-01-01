@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchReviewsById } from 'services/API';
 import { reviewsMapper } from 'utils/reviewsMapper';
+import RequestError from 'components/RequestError/RequestError';
 import { Item, Name, Text, List } from './Reviews.styled';
 // Хук для запиту на інфо
 //import { useFetchReviews } from 'components/hooks/useFetchReviews';
@@ -29,6 +30,7 @@ const Reviews = () => {
 
   return (
     <div>
+      {error && <RequestError />}
       {reviews.length === 0 && !error && (
         <Text>There no reviews yet...Please, try another film!</Text>
       )}

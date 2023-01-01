@@ -1,13 +1,17 @@
 import { useFetchActors } from 'components/hooks/useFetchActors';
 import * as API from '../../services/API';
 import { List, Item, Poster, Name } from './Cast.styled';
+import { Text } from 'components/Reviews/Reviews.styled';
 
 const Cast = () => {
   const actors = useFetchActors();
 
   return (
     <div>
-      {actors !== [] ? (
+      {actors.length === 0 && (
+        <Text>There no information about actors yet...</Text>
+      )}
+      {actors && (
         <List>
           {actors.map(({ id, character, name, profilePath }) => (
             <Item key={id}>
@@ -27,8 +31,6 @@ const Cast = () => {
             </Item>
           ))}
         </List>
-      ) : (
-        <p>The information about actors yet!</p>
       )}
     </div>
   );

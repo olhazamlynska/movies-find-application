@@ -4,25 +4,15 @@ import * as API from '../../services/API';
 import { moviesMapper } from 'utils/moviesMapper';
 import { Btn, Input, LinkNav } from './Movies.styled';
 import { Box } from 'components/Box/Box';
+import RequestError from 'components/RequestError/RequestError';
 
 const Movies = () => {
   const [films, setFilms] = useState([]);
+  const [error, setError] = useState(null);
   const location = useLocation();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('query') ?? '';
-
-  useEffect(() => {
-    API.searchMoviesByName(searchQuery)
-      .then(({ results }) => {
-        const films = moviesMapper(results);
-        setFilms(films);
-      })
-      .catch(error => {
-        console.log(error.message);
-        setFilms([]);
-      });
-  }, [searchQuery]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -35,13 +25,31 @@ const Movies = () => {
 
     e.target.reset();
   };
+  useEffect(() => {
+    if (searchQuery.trim('') === '' || searchQuery === null) {
+      setFilms([]);
+      return;
+    }
+    API.searchMoviesByName(searchQuery)
+      .then(({ results }) => {
+        const films = moviesMapper(results);
+        setFilms(films);
+      })
+      .catch(error => {
+        console.log(error.message);
+        setError(error);
+        setFilms([]);
+      });
+  }, [searchQuery]);
 
   return (
     <Box as={'div'} pl={[7]}>
+      {error && <RequestError />}
       <form onSubmit={handleSubmit}>
         <Input type="text" name="query" />
         <Btn type="submit">Find films</Btn>
       </form>
+
       {films.length !== 0 && (
         <>
           <ul>
