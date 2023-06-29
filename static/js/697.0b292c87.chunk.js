@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmovies_find_application=self.webpackChunkmovies_find_application||[]).push([[697],{3697:function(e,n,i){i.r(n);var t=i(184);n.default=function(){return(0,t.jsxs)("main",{style:{textAlign:"center"},children:[(0,t.jsx)("b",{style:{fontSize:64},children:"404"}),(0,t.jsx)("p",{children:"Sorry, we couldn't find that page!"})]})}}}]);
+//# sourceMappingURL=697.0b292c87.chunk.js.map
