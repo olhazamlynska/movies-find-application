@@ -1,4 +1,4 @@
-import { useFetchActors } from 'components/hooks/useFetchActors';
+import { useFetchActors } from 'hooks/useFetchActors';
 import * as API from '../../services/API';
 import { List, Item, Poster, Name } from './Cast.styled';
 import { Text } from 'components/Reviews/Reviews.styled';
