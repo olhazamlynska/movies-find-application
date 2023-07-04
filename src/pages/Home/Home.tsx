@@ -1,22 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import * as API from '../../services/API';
-import { List, Item, Poster, LinkNav, Title, Name } from './Home.styled';
-import RequestError from '../../components/RequestError';
+import { getTrendingMovies, POSTER_URL } from '../../services/API';
 import { IMovie } from '../../interfaces/AllCommonItefaces';
+import Loader from '../../components/Loader';
+import RequestError from '../../components/RequestError';
 
+import { List, Item, Poster, LinkNav, Title, Name } from './Home.styled';
 const Home = () => {
   const [films, setfilms] = useState<IMovie[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
   useEffect(() => {
     async function fetchmovies() {
       try {
-        const { results } = await API.getTrendingMovies();
+        setIsFetching(true);
+        const { results } = await getTrendingMovies();
 
         setfilms(results);
-      } catch (error: any) {
-        setError(error);
+      } catch (error) {
+        if (error instanceof Error) {
+          setIsFetching(false);
+          setError(error.message);
+        }
+      } finally {
+        setIsFetching(false);
       }
     }
     fetchmovies();
@@ -25,6 +33,7 @@ const Home = () => {
   return (
     <>
       {error && <RequestError />}
+      {!error && isFetching && <Loader />}
       <Title>Tending movies today</Title>
       <List>
         {films.map(({ id, poster_path, title, name }) => (
@@ -33,7 +42,7 @@ const Home = () => {
               <Poster
                 src={
                   poster_path
-                    ? API.POSTER_URL + poster_path
+                    ? POSTER_URL + poster_path
                     : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
                 }
                 alt={title}

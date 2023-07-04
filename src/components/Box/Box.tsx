@@ -12,13 +12,13 @@ import {
 import { Props } from '../../interfaces/AllCommonItefaces';
 
 const Box = styled.div<Props>`
-  ${typography},
-  ${layout},
-  ${space},
-  ${flexbox},
-  ${background},
-  ${border},
-  ${color},
+  ${typography};
+  ${layout};
+  ${space};
+  ${flexbox};
+  ${background};
+  ${border};
+  ${color};
   ${position}
 `;
 export default Box;

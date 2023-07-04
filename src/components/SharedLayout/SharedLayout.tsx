@@ -2,6 +2,7 @@ import Box from '../Box';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container, Header, Link, List } from './SharedLayout.styled';
+import Loader from '../Loader';
 
 export const SharedLayout: React.FC = () => {
   return (
@@ -18,11 +19,13 @@ export const SharedLayout: React.FC = () => {
           </List>
         </nav>
       </Header>
-      <Box as={'main'}>
-        <Suspense fallback={null}>
+
+      <Suspense fallback={<Loader />}>
+        <Box as={'main'} flex={1}>
           <Outlet />
-        </Suspense>
-      </Box>
+        </Box>
+      </Suspense>
+
       <Box as={'footer'}></Box>
     </Container>
   );

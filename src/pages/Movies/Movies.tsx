@@ -1,74 +1,82 @@
-import { useSearchParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import * as API from '../../services/API';
-
-import { Btn, Input, LinkNav } from './Movies.styled';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { getMoviesByName } from '../../services/API';
+import { IMovie } from '../../interfaces/AllCommonItefaces';
 import Box from '../../components/Box/';
 import RequestError from '../../components/RequestError';
-import { IMovie } from '../../interfaces/AllCommonItefaces';
+import SearchForm from '../../components/SearchForm/SearchForm';
+import Loader from '../../components/Loader/Loader';
+import { LinkNav } from './Movies.styled';
 
 const Movies = () => {
   const [films, setFilms] = useState<IMovie[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
-
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery: string = searchParams.get('query') ?? '';
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      query: { value: string };
-    };
-    const searchQuery = target.query.value;
-    setSearchParams(searchQuery);
-
-    if (searchQuery.trim() === '' || searchQuery === null) {
-      setFilms([]);
-      return;
-    }
-  };
   useEffect(() => {
-    if (searchQuery.trim() === '' || searchQuery === null) {
+    if (!searchQuery) {
       setFilms([]);
       return;
     }
-    async function getMoviesByName(searchQuery: string) {
+    if (searchQuery.trim() === '' || searchQuery === '') {
+      toast.error('Enter valid search data');
+      setFilms([]);
+      return;
+    }
+    async function getMoviesBySearchQouery(searchQuery: string) {
       try {
-        const { results } = await API.searchMoviesByName(searchQuery);
-        setFilms(results);
+        setIsFetching(true);
+        const { results } = await getMoviesByName(searchQuery);
+        setFilms(prevFilms => [...prevFilms, ...results]);
+        setError(null);
       } catch (error) {
         if (error instanceof Error) {
+          setIsFetching(false);
           setError(error.message);
           setFilms([]);
         }
+      } finally {
+        setIsFetching(false);
       }
     }
-    getMoviesByName(searchQuery);
+    getMoviesBySearchQouery(searchQuery);
   }, [searchQuery]);
 
+  const handleSubmit = (value: string) => {
+    if (value.toLowerCase().trim() === '') {
+      toast.error('Enter search data');
+      return;
+    }
+    if (value.toLowerCase().trim() === searchQuery) {
+      toast.error('You have the same request. Enter new...');
+      return;
+    }
+    if (value.toLowerCase().trim() !== searchQuery) {
+      setFilms([]);
+      setSearchParams(value !== '' ? { query: value } : {});
+    }
+  };
   return (
-    <Box as={'div'} pl={[7]}>
+    <>
       {error && <RequestError />}
-      <form onSubmit={handleSubmit}>
-        <Input type="text" name="query" />
-        <Btn type="submit">Find films</Btn>
-      </form>
-
+      {!error && isFetching && <Loader />}
+      <SearchForm value={searchQuery} onSubmit={handleSubmit} />
       {films.length !== 0 && (
-        <>
-          <ul>
-            {films.map(({ id, title }) => (
-              <li key={id}>
-                <LinkNav to={`${id}`} state={{ from: location }}>
-                  {title}
-                </LinkNav>
-              </li>
-            ))}
-          </ul>
-        </>
+        <ul>
+          {films.map(({ id, title }) => (
+            <li key={id}>
+              <LinkNav to={`${id}`} state={{ from: location }}>
+                {title}
+              </LinkNav>
+            </li>
+          ))}
+        </ul>
       )}
-    </Box>
+    </>
   );
 };
 

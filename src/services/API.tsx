@@ -23,9 +23,7 @@ export const getTrendingMovies = async (): Promise<IMoviesData> => {
   return response.data;
 };
 
-export const searchMoviesByName = async (
-  search: string
-): Promise<IMoviesData> => {
+export const getMoviesByName = async (search: string): Promise<IMoviesData> => {
   const response = await axios.get(
     `${SEARCH_PATH}?query=${search}&api_key=${API_KEY}&language=en-US&page=1&include_adult=false`
   );
@@ -33,25 +31,25 @@ export const searchMoviesByName = async (
   return response.data;
 };
 
-export const searchMovieById = async (Id: number): Promise<IMovieById> => {
+export const getMovieById = async (id: number): Promise<IMovieById> => {
   const response = await axios.get(
-    `${SEARCH_ALL_INFO_PATH}/${Id}?api_key=${API_KEY}&language=en-US`
+    `${SEARCH_ALL_INFO_PATH}/${id}?api_key=${API_KEY}&language=en-US`
   );
 
   return response.data;
 };
 
-export const searchActorsById = async (Id: number): Promise<IActor[]> => {
+export const getActorsById = async (id: number): Promise<IActor[]> => {
   const response = await axios.get(
-    `${SEARCH_ALL_INFO_PATH}/${Id}/credits?api_key=${API_KEY}&language=en-US`
+    `${SEARCH_ALL_INFO_PATH}/${id}/credits?api_key=${API_KEY}&language=en-US`
   );
   const actor = actorsMapper(response.data.cast);
   return actor;
 };
 
-export const searchReviewsById = async (Id: number): Promise<IReview[]> => {
+export const getReviewsById = async (id: number): Promise<IReview[]> => {
   const response = await axios.get(
-    `${SEARCH_ALL_INFO_PATH}/${Id}/reviews?api_key=${API_KEY}&language=en-US`
+    `${SEARCH_ALL_INFO_PATH}/${id}/reviews?api_key=${API_KEY}&language=en-US`
   );
   const review = reviewsMapper(response.data.results);
   return review;

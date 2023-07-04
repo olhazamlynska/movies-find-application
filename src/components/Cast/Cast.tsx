@@ -1,16 +1,44 @@
-import { useFetchActors } from '../../hooks/useFetchActors';
-import * as API from '../../services/API';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getActorsById, POSTER_URL } from '../../services/API';
+import { IActor } from '../../interfaces/AllCommonItefaces';
 import { List, Item, Poster, Name } from './Cast.styled';
 import { Text } from '../Reviews/Reviews.styled';
+import RequestError from '../RequestError';
+import Loader from '../Loader';
 
 const Cast: React.FC = () => {
-  const actors = useFetchActors();
+  const [actors, setActors] = useState<IActor[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    async function fetchActorsById(id: number) {
+      try {
+        setIsFetching(true);
+        const result = await getActorsById(id);
+        setActors(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+          setIsFetching(false);
+          setActors([]);
+        }
+      } finally {
+        setIsFetching(false);
+      }
+    }
+    fetchActorsById(Number(id));
+  }, [id]);
 
   return (
-    <div>
+    <>
+      {error && <RequestError />}
       {actors.length === 0 && (
         <Text>There no information about actors yet...</Text>
       )}
+      {!error && isFetching && <Loader />}
       {actors && (
         <List>
           {actors.map(({ id, character, name, profile_path }) => (
@@ -18,7 +46,7 @@ const Cast: React.FC = () => {
               <Poster
                 src={
                   profile_path
-                    ? API.POSTER_URL + profile_path
+                    ? POSTER_URL + profile_path
                     : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
                 }
                 alt={name}
@@ -32,7 +60,7 @@ const Cast: React.FC = () => {
           ))}
         </List>
       )}
-    </div>
+    </>
   );
 };
 export default Cast;

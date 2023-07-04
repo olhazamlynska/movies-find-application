@@ -1,17 +1,15 @@
-//import { useFetchFilm } from 'components/hooks/useFetchDetails';
-
-import Box from '../../components/Box';
-import RequestError from '../../components/RequestError';
 import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import * as API from '../../services/API';
-import { LinkNav, BackBtn, List, Item } from './MovieDetails.styled';
+import { getMovieById, POSTER_URL } from '../../services/API';
 import { IMovieById } from '../../interfaces/AllCommonItefaces';
+import Box from '../../components/Box';
+import RequestError from '../../components/RequestError';
+import Loader from '../../components/Loader/Loader';
+import { LinkNav, BackBtn, List, Item } from './MovieDetails.styled';
 
 const MovieDetails = () => {
-  // Хук для фетча деталей
-  //const film = useFetchFilm();
   const [movie, setMovie] = useState<IMovieById | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
 
@@ -19,18 +17,22 @@ const MovieDetails = () => {
   const location = useLocation();
 
   useEffect(() => {
-    async function getMovieById(id: number) {
+    async function fetchMovieById(id: number) {
       try {
-        const result = await API.searchMovieById(id);
+        setIsFetching(true);
+        const result = await getMovieById(id);
         setMovie(result);
       } catch (error) {
         if (error instanceof Error) {
+          setIsFetching(false);
           setError(error.message);
           setMovie(null);
         }
+      } finally {
+        setIsFetching(false);
       }
     }
-    getMovieById(Number(id));
+    fetchMovieById(Number(id));
   }, [id]);
 
   return (
@@ -42,6 +44,7 @@ const MovieDetails = () => {
         Go back
       </BackBtn>
       {!movie && error && <RequestError />}
+      {!error && isFetching && <Loader />}
       {movie && (
         <Box as={'div'}>
           <h2>
@@ -51,7 +54,7 @@ const MovieDetails = () => {
             <img
               src={
                 movie.poster_path
-                  ? API.POSTER_URL + movie.poster_path
+                  ? POSTER_URL + movie.poster_path
                   : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
               }
               alt={movie.title}

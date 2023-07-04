@@ -1,41 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { searchReviewsById } from '../../services/API';
-import RequestError from '../RequestError';
-import { Item, Name, Text, List } from './Reviews.styled';
+import { getReviewsById } from '../../services/API';
 import { IReview } from '../../interfaces/AllCommonItefaces';
-
-// Хук для запиту на інфо
-//import { useFetchReviews } from 'components/hooks/useFetchReviews';
+import RequestError from '../RequestError';
+import Loader from '../Loader/Loader';
+import { Item, Name, Text, List } from './Reviews.styled';
 
 const Reviews = () => {
-  //Виклик хука
-  //const reviews = useFetchReviews();
-
   const [reviews, setReviews] = useState<IReview[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
-    async function getReviewsById(id: number) {
+    async function fetchReviewsById(id: number) {
       try {
-        const result = await searchReviewsById(id);
+        setIsFetching(true);
+        const result = await getReviewsById(id);
 
         setReviews(result);
       } catch (error) {
         if (error instanceof Error) {
+          setIsFetching(false);
           setError(error.message);
           setReviews([]);
         }
+      } finally {
+        setIsFetching(false);
       }
     }
-    getReviewsById(Number(id));
+    fetchReviewsById(Number(id));
   }, [id]);
 
   return (
     <>
       {error && <RequestError />}
-
+      {!error && isFetching && <Loader />}
       {reviews.length > 0 && !error && (
         <div>
           {reviews && (

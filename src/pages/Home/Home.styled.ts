@@ -16,7 +16,7 @@ export const List = styled.ul`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 30px;
   margin-top: ${p => p.theme.space[4]}px;
 `;
 
@@ -51,5 +51,5 @@ export const LinkNav = styled(Link)`
 `;
 
 export const Name = styled.p`
-  padding-left: ${p => p.theme.space[3]}px; ;
+  padding-left: ${p => p.theme.space[3]}px;
 `;
