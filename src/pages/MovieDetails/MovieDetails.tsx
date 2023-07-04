@@ -1,30 +1,36 @@
 //import { useFetchFilm } from 'components/hooks/useFetchDetails';
 
-import { Box } from 'components/Box/Box';
-import RequestError from 'components/RequestError/RequestError';
+import Box from '../../components/Box';
+import RequestError from '../../components/RequestError';
 import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as API from '../../services/API';
 import { LinkNav, BackBtn, List, Item } from './MovieDetails.styled';
+import { IMovieById } from '../../interfaces/AllCommonItefaces';
 
 const MovieDetails = () => {
   // Хук для фетча деталей
   //const film = useFetchFilm();
-  const [movie, setMovie] = useState(null);
-  const [error, setError] = useState(null);
+  const [movie, setMovie] = useState<IMovieById | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    API.searchMovieById(id)
-      .then(setMovie)
-      .catch(error => {
-        console.log();
-        setError(error);
-        setMovie([]);
-      });
+    async function getMovieById(id: number) {
+      try {
+        const result = await API.searchMovieById(id);
+        setMovie(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+          setMovie(null);
+        }
+      }
+    }
+    getMovieById(Number(id));
   }, [id]);
 
   return (

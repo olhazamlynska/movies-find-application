@@ -1,9 +1,9 @@
-import { useFetchActors } from 'hooks/useFetchActors';
+import { useFetchActors } from '../../hooks/useFetchActors';
 import * as API from '../../services/API';
 import { List, Item, Poster, Name } from './Cast.styled';
-import { Text } from 'components/Reviews/Reviews.styled';
+import { Text } from '../Reviews/Reviews.styled';
 
-const Cast = () => {
+const Cast: React.FC = () => {
   const actors = useFetchActors();
 
   return (
@@ -13,12 +13,12 @@ const Cast = () => {
       )}
       {actors && (
         <List>
-          {actors.map(({ id, character, name, profilePath }) => (
+          {actors.map(({ id, character, name, profile_path }) => (
             <Item key={id}>
               <Poster
                 src={
-                  profilePath
-                    ? API.POSTER_URL + profilePath
+                  profile_path
+                    ? API.POSTER_URL + profile_path
                     : 'https://ik.imagekit.io/tc8jxffbcvf/default-movie-portrait_EmJUj9Tda5wa.jpg?tr=fo-auto,di-'
                 }
                 alt={name}
