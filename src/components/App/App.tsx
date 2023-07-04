@@ -1,15 +1,15 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { SharedLayout } from 'components/SharedLayout/SharedLayout';
+import { SharedLayout } from '../SharedLayout';
 
-const Home = lazy(() => import('pages/Home/Home'));
-const Movies = lazy(() => import('pages/Movies/Movies'));
-const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
+const Home = lazy(() => import('../../pages/Home'));
+const Movies = lazy(() => import('../../pages/Movies'));
+const MovieDetails = lazy(() => import('../../pages/MovieDetails'));
 const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
-const NotFound = lazy(() => import('pages/NotFound/NotFound'));
+const NotFound = lazy(() => import('../../pages/NotFound'));
 
-export function App() {
+const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<SharedLayout />}>
@@ -23,4 +23,6 @@ export function App() {
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
-}
+};
+
+export default App;
