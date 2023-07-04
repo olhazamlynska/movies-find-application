@@ -3,7 +3,6 @@ import { useSearchParams, useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { getMoviesByName } from '../../services/API';
 import { IMovie } from '../../interfaces/AllCommonItefaces';
-import Box from '../../components/Box/';
 import RequestError from '../../components/RequestError';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import Loader from '../../components/Loader/Loader';
@@ -23,7 +22,7 @@ const Movies = () => {
       return;
     }
     if (searchQuery.trim() === '' || searchQuery === '') {
-      toast.error('Enter valid search data');
+      toast.error('Enter valid search data!');
       setFilms([]);
       return;
     }
