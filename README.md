@@ -33,7 +33,7 @@ to provide up-to-date movie information.
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">React.js</a></li>\
+    <li><a href="https://reactjs.org/">React.js</a></li>
     <li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
     <li><a href="https://axios-http.com/">Axios</a></li>
     <li><a href="https://formik.org/">Formik</a></li>
