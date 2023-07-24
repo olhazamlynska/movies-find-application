@@ -33,7 +33,14 @@ to provide up-to-date movie information.
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">React.js</a></li>
+    <li><a href="https://reactjs.org/">React.js</a></li>\
+    <li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
+    <li><a href="https://axios-http.com/">Axios</a></li>
+    <li><a href="https://formik.org/">Formik</a></li>
+    <li><a href="https://github.com/jquense/yup">Yup</a></li>
+    <li><a href="https://styled-components.com/">Styled-Components</a></li>
+    <li><a href="https://mhnpd.github.io/react-loader-spinner/">React loader spinner</a></li>
+    <li><a href="https://react-hot-toast.com/">React-hot-toast</a></li>
   </ul>
 </details>
 
