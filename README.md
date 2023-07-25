@@ -102,7 +102,7 @@ To run the project, execute the following command:
 👤 **Olha Zamlynska**
 
 - GitHub: [@githubhandle](https://github.com/olhazamlynska)
-- Twitter: [@twitterhandle](https://twitter.com/olyazamlynska)
+- Twitter: [@twitterhandle](https://twitter.com/olhazamlynska)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/olhazamlynska)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
